@@ -1,0 +1,82 @@
+#include <stdio.h>
+
+#define ROWS 5  // Number of rows
+#define COLS 5  // Number of seats per row
+
+// Function to display the seating arrangement
+void display Seats(int seats[ROWS][COLS]) 
+{
+    printf("\nSeating Arrangement:\n");
+    for (int i = 0; i < ROWS; i++) 
+    {
+        for (int j = 0; j < COLS; j++) 
+        {
+            if (seats[i][j] == 0)
+                printf("[ ] ");  // Available
+            else
+                printf("[X] ");  // Reserved
+        }
+        printf("\n");
+    }
+}
+
+// Function to reserve a seat
+void reserveSeat(int seats[ROWS][COLS]) 
+{
+    int row, col;
+    printf("\nEnter the row (1-%d) and column (1-%d) to reserve: ", ROWS, COLS);
+    scanf("%d %d", &row, &col);
+
+    // Check if input is within bounds
+    if (row < 1 || row > ROWS || col < 1 || col > COLS) 
+    {
+        printf("Invalid seat number. Try again.\n");
+        return;
+    }
+
+    // Adjust for 0-based indexing
+    row--;
+    col--;
+
+    // Check if the seat is already reserved
+    if (seats[row][col] == 1) 
+    {
+        printf("Seat is already reserved. Choose another seat.\n");
+    } else 
+    {
+        seats[row][col] = 1;  // Mark the seat as reserved
+        printf("Seat reserved successfully!\n");
+    }
+}
+
+int main() 
+{
+    int seats[ROWS][COLS] = {0};  // Initialize all seats as available (0)
+    int choice;
+
+    do {
+        printf("\n--- Seat Reservation System ---\n");
+        printf("1. Display Seats\n");
+        printf("2. Reserve a Seat\n");
+        printf("3. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) 
+        {
+            case 1:
+                displaySeats(seats);
+                break;
+            case 2:
+                reserveSeat(seats);
+                break;
+            case 3:
+                printf("Exiting the program.\n");
+                break;
+            default:
+                printf("Invalid choice. Try again.\n");
+        }
+    } while (choice != 3);
+
+    return 0;
+}
